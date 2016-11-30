@@ -175,16 +175,10 @@ class NetworkGenerator:
                 os.unlink(fn)
         return tmpdir, 'networks.zip'
 
+# EDIT this to point to the correct files!
 config = {
     'annotations': '/home/ec2-user/Dropbox/networks/annotations.parquet',
     'datasets': '/home/ec2-user/Dropbox/networks/datasets.csv',
-}
-
-query = {
-    'datasets': ["AstraZeneca//CT26 S20 - low masses", "the University of Texas at Austin//Tumor9"],
-    'thresholdD01': 0.4,
-    'thresholdD02': 0.5,
-    'thresholdA': 0.5
 }
 
 gen = NetworkGenerator(config)
@@ -192,10 +186,6 @@ gen = NetworkGenerator(config)
 @bottle.route("/")
 def index():
     return bottle.static_file("index.html", "templates")
-
-@bottle.route("/index2")
-def index2():
-    return bottle.static_file("index2.html", "templates")
 
 @bottle.route("/datasets")
 def datasets():
