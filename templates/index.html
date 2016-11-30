@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title> METASPACE networks </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div id="app" class="col-sm-4">
+          <div class="form-group">
+            <form action="/network" method="post">
+              <label for="dataset-list">
+                List of dataset names, one per line:
+              </label>
+              <span><a href="/datasets">(known dataset names)</a></span><br/>
+              <textarea name="datasets" rows="20" cols="50" id="dataset-list" class="form-control"></textarea>
+
+              <threshold name="thresholdD01"></threshold>
+              <threshold name="thresholdD02"></threshold>
+              <threshold name="thresholdA"></threshold>
+              <input class="btn btn-default" type="submit" value='Submit'/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <script type="text/x-template" id="threshold-input-template">
+      <input :name=name step="0.01" type="number" min="0" max="1" 
+             :placeholder=name class="form-control"/>
+    </script>
+
+    <script type='text/javascript'>
+      window.onload=function(){
+
+        var ThresholdInput = {
+          props: ['name'],
+          template: '#threshold-input-template'
+        }
+
+        new Vue({
+          el: '#app',
+          data: {
+          },
+          components: {
+            'threshold': ThresholdInput
+          }
+        })
+      }
+    </script>
+  </body>
+</html>

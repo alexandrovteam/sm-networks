@@ -1,0 +1,13 @@
+name: sm-networks
+channels:
+  - conda-forge
+dependencies:
+  - pyarrow
+  - psycopg2
+  - pip:
+    - numpy
+    - scipy
+    - pandas
+    - elasticsearch==2.4.0
+    - elasticsearch-dsl==2.2.0
+    - bottle
