@@ -142,6 +142,7 @@ class NetworkGenerator:
         nodes = fdr_table.groupby(level='sf').agg('min').T\
                          .reindex(self.metadata.index) / 100.0
         nodes.index.rename('ds_id', inplace=True)
+        nodes['# of annotations @ FDR = 0.1'] = (nodes <= 0.1).sum(axis=1)
         nodes['# of annotations @ FDR = 0.2'] = (nodes <= 0.2).sum(axis=1)
         ds_ids = [self.name_to_id[name] for name in datasets]
         nodes = self.metadata[self.metadata.index.isin(ds_ids)].join(nodes)
@@ -169,8 +170,11 @@ class NetworkGenerator:
         annot_02['nodes'].to_csv(F("Anodes02.csv"), index=False)
         annot_02['edges'].to_csv(F("Aedges02.csv"), index=False)
 
+        with open(F("settings.json"), "w+") as j:
+            json.dump(query, j, indent=4, sort_keys=True)
+
         with ZipFile(F('networks.zip'), 'w') as z:
-            for fn in glob(tmpdir + "/*.csv"):
+            for fn in list(glob(tmpdir + "/*.csv")) + [F('settings.json')]:
                 z.write(fn, os.path.basename(fn))
                 os.unlink(fn)
         return tmpdir, 'networks.zip'
