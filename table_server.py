@@ -85,8 +85,8 @@ class NetworkGenerator:
         nodes = full_pass_table.copy().astype(int)
         nodes['# of datasets'] = nodes.sum(axis=1)
         nodes.sort_values(by='# of datasets', ascending=False, inplace=True)
-        compound_names = annotations[['sf', 'comp_names']].drop_duplicates().set_index('sf')
-        nodes = nodes.join(compound_names)
+        compound_info = annotations[['sf', 'comp_names', 'comp_ids']]
+        nodes = nodes.join(compound_info.drop_duplicates().set_index('sf'))
         nodes = nodes.reset_index()
         nodes['comments'] = ''
         return {'nodes': nodes, 'edges': edges}
